@@ -1,0 +1,3 @@
+rootProject.name='DemoLintCheck'
+include ':app'
+include ':testmodule'
