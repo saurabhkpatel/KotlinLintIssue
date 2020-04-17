@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import com.saurabhpatel.testmodule.ApiVersionUtils;
+import com.saurabhpatel.testmodule.JavaApiVersionUtils;
 import java.io.File;
 
 public class MainActivity extends AppCompatActivity {
@@ -18,12 +19,23 @@ public class MainActivity extends AppCompatActivity {
         final StorageStatsManager storageStatsManager = (StorageStatsManager) context.getSystemService(Context.STORAGE_STATS_SERVICE);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private static void getApplicationBytesFromOreoWhichWorksWithJava(@NonNull Context context, @NonNull File file) {
+        final StorageStatsManager storageStatsManager = (StorageStatsManager) context.getSystemService(Context.STORAGE_STATS_SERVICE);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         if (ApiVersionUtils.hasOreo()) {
             getApplicationBytesFromOreo(this, new File("test"));
+        } else {
+            Log.d("TAG", "nothing to do here for pre Oreo");
+        }
+
+        if (JavaApiVersionUtils.hasOreo()) {
+            getApplicationBytesFromOreoWhichWorksWithJava(this, new File("test"));
         } else {
             Log.d("TAG", "nothing to do here for pre Oreo");
         }
